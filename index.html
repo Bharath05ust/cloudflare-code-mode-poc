@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b1018">
+    <meta name="description" content="An interactive, local-first demo of Cloudflare Code Mode: what it is, how it works, and when it helps.">
+    <title>Code Mode Lab — Cloudflare POC</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Code Mode Lab home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>CODE MODE <span class="brand-light">LAB</span></span>
+        </a>
+        <nav class="top-links" aria-label="Main navigation">
+          <a href="#workbench">Workbench</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#when-to-use">When to use it</a>
+        </nav>
+        <span class="environment-pill"><span class="status-dot"></span> LOCAL SIMULATION</span>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-line"></span> CLOUDFLARE + MODEL CONTEXT PROTOCOL</div>
+            <h1>Give an AI the tools.<br>Let it <span>write the workflow.</span></h1>
+            <p>Explore how Code Mode can turn a pile of API tools into a small, programmable interface—then run a realistic Cloudflare workflow without needing an account or API token.</p>
+            <a class="hero-link" href="#workbench">Try the interactive demo <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="hero-visual" aria-label="Many tools are reduced to a code search and execution interface">
+            <div class="visual-label">FROM MANY TO TWO</div>
+            <div class="tool-cloud" aria-hidden="true">
+              <span>list_zones</span><span>get_dns_records</span><span>get_analytics</span>
+              <span>list_rules</span><span>get_firewall_events</span><span>update_setting</span>
+            </div>
+            <div class="visual-arrow" aria-hidden="true">↓</div>
+            <div class="code-tools"><span class="terminal-glyph">&gt;_</span><span><b>search()</b><small>discover API capabilities</small></span><span class="code-divider"></span><span><b>execute()</b><small>run a composed workflow</small></span></div>
+            <div class="visual-note">Illustrative pattern · exact tools depend on the server</div>
+          </div>
+        </section>
+
+        <section class="workbench section-anchor" id="workbench">
+          <div class="section-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> INTERACTIVE PLAYGROUND</div><h2>Run a real-world-shaped workflow</h2></div>
+            <span class="local-badge"><span class="status-dot"></span> SAFE · MOCK DATA ONLY</span>
+          </div>
+          <div class="workbench-grid">
+            <aside class="scenario-panel panel">
+              <div class="panel-kicker">01 / PICK A SCENARIO</div>
+              <p class="panel-description">Choose a task an operations team might ask an assistant to do.</p>
+              <div class="scenario-list" role="group" aria-label="Choose a demo scenario">
+                <button class="scenario-card is-selected" data-scenario="audit" aria-pressed="true">
+                  <span class="scenario-icon icon-orange">◈</span><span class="scenario-text"><b>Audit a zone</b><small>Review DNS &amp; security posture</small></span><span class="card-arrow">→</span>
+                </button>
+                <button class="scenario-card" data-scenario="traffic" aria-pressed="false">
+                  <span class="scenario-icon icon-blue">⌁</span><span class="scenario-text"><b>Investigate traffic</b><small>Summarize a traffic spike</small></span><span class="card-arrow">→</span>
+                </button>
+                <button class="scenario-card" data-scenario="threat" aria-pressed="false">
+                  <span class="scenario-icon icon-purple">◇</span><span class="scenario-text"><b>Respond to a threat</b><small>Review events, propose a rule</small></span><span class="card-arrow">→</span>
+                </button>
+              </div>
+              <div class="scenario-callout"><span class="callout-icon">i</span><span><b>Why this matters</b><br>The model can compose several API operations in one task instead of asking you to manually connect each result.</span></div>
+            </aside>
+
+            <section class="editor-panel panel" aria-label="Code Mode workflow">
+              <div class="editor-top">
+                <div><div class="panel-kicker">02 / THE MODEL WRITES A PLAN</div><div class="file-label"><span class="file-dot"></span> workflow.ts <span class="readonly-label">READ ONLY EXAMPLE</span></div></div>
+                <span class="language-tag">TYPESCRIPT</span>
+              </div>
+              <div class="code-window"><pre id="code-example" aria-label="Example workflow code"></pre></div>
+              <div class="editor-footer">
+                <span><span class="inline-green-dot"></span> Demo runs against bundled sample data</span>
+                <button class="run-button" id="run-button"><span aria-hidden="true">▶</span> Run workflow</button>
+              </div>
+              <div class="run-status" id="run-status" role="status" aria-live="polite">Ready to run · no Cloudflare account required</div>
+            </section>
+
+            <section class="result-panel panel" aria-label="Workflow execution results">
+              <div class="result-heading"><div><div class="panel-kicker">03 / INSPECT THE RESULT</div><h3 id="result-title">Your output</h3></div><span class="result-state" id="result-state">WAITING</span></div>
+              <div class="trace" id="trace" aria-live="polite">
+                <div class="empty-state"><span class="empty-symbol">↳</span><b>Nothing has run yet</b><span>Start the workflow to see each mocked API call and its result.</span></div>
+              </div>
+              <div class="output-box"><div class="output-label"><span>STRUCTURED OUTPUT</span><span id="output-format">JSON</span></div><pre id="output-json">{
+  "status": "waiting",
+  "hint": "Choose a scenario and run it"
+}</pre></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="comparison section-anchor" id="comparison">
+          <div class="section-heading compact-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> THE PRACTICAL DIFFERENCE</div><h2>Less tool overhead. More useful work.</h2></div><p class="heading-aside">A conceptual comparison—not a benchmark.<br>Actual savings depend on the MCP server and task.</p></div>
+          <div class="compare-grid">
+            <article class="compare-card traditional">
+              <div class="compare-title"><span class="compare-icon">▦</span><div><b>Traditional tool-by-tool</b><small>Expose each operation separately</small></div></div>
+              <div class="tool-pile"><span>list_zones</span><span>get_zone</span><span>list_dns_records</span><span>get_security_settings</span><span>get_analytics</span><span>…more tools</span></div>
+              <div class="compare-stat"><span>What the model must handle</span><b>Many tool definitions <i>+ multiple round trips</i></b></div>
+              <p>More individual tool schemas can mean more context and more back-and-forth to complete a multi-step task.</p>
+            </article>
+            <article class="compare-card codemode">
+              <div class="compare-title"><span class="compare-icon">&gt;_</span><div><b>Code Mode pattern</b><small>Discover, then compose in code</small></div></div>
+              <div class="mini-code"><span>01</span> search("zone DNS and security")<br><span>02</span> execute(async (cf) =&gt; {<br><span>03</span> &nbsp; const [dns, security] = await Promise.all([...])<br><span>04</span> &nbsp; return summarize(dns, security)<br><span>05</span> })</div>
+              <div class="compare-stat"><span>What the model sees</span><b>A small interface <i>+ composed workflow</i></b></div>
+              <p>Useful when tasks span many API operations. Code runs in a controlled server-side environment—not in the model's imagination.</p>
+            </article>
+          </div>
+          <div class="key-idea"><span class="spark">✳</span><span><b>Key idea:</b> Code Mode changes how an AI accesses tools; it is not a Cloudflare product feature that automatically optimizes a website. The MCP server, permissions, and runtime still matter.</span></div>
+        </section>
+
+        <section class="how section-anchor" id="how-it-works">
+          <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> UNDER THE HOOD</div><h2>How the pattern works</h2></div><p class="heading-aside">Think of it as an API toolbox the model can query and program.</p></div>
+          <div class="steps-grid">
+            <article class="step-card"><span class="step-number">01</span><div class="step-icon">⌕</div><h3>Discover</h3><p>The model searches for the API methods and types relevant to the task, instead of loading every tool description upfront.</p><span class="step-caption">SEARCH THE SURFACE AREA</span></article>
+            <article class="step-card"><span class="step-number">02</span><div class="step-icon">{ }</div><h3>Compose</h3><p>It writes a small program that chains calls, handles data in code, and returns only the useful result.</p><span class="step-caption">WRITE A WORKFLOW</span></article>
+            <article class="step-card"><span class="step-number">03</span><div class="step-icon">▶</div><h3>Execute</h3><p>A sandboxed runtime calls the connected API, applies its access controls, and returns output for the model to explain.</p><span class="step-caption">RUN &amp; RETURN RESULTS</span></article>
+          </div>
+          <div class="flow-line"><span>USER REQUEST</span><i></i><span>MODEL</span><i></i><span>SEARCH + EXECUTE</span><i></i><span>CONTROLLED RUNTIME</span><i></i><span>CLOUDFLARE API</span></div>
+        </section>
+
+        <section class="use-cases section-anchor" id="when-to-use">
+          <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> WHEN IT FITS</div><h2>Good fit—and important guardrails</h2></div></div>
+          <div class="use-grid">
+            <article class="use-card fit-card"><div class="use-icon">✓</div><div><h3>Reach for it when…</h3><ul><li>A task needs several API calls or data transformations</li><li>The API surface is large and tool definitions use too much context</li><li>You want to summarize, filter, or join results before returning them</li><li>Workflows benefit from code-level branching or batching</li></ul></div></article>
+            <article class="use-card guard-card"><div class="use-icon">!</div><div><h3>Design it carefully</h3><ul><li>Grant least-privilege credentials; separate read and write access</li><li>Validate inputs and restrict which APIs the runtime can reach</li><li>Require approval for destructive or production-changing actions</li><li>Log execution and treat returned data as untrusted input</li></ul></div></article>
+          </div>
+          <div class="scope-note"><b>About this POC</b><span>This page is a browser-only simulation with fictional data. Its “API calls” are illustrative and never contact Cloudflare. To connect a real account, you would need a compatible MCP server, server-side credentials, and appropriate authorization and safety controls.</span></div>
+        </section>
+      </main>
+      <footer class="footer"><a class="brand footer-brand" href="#"><span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span><span>CODE MODE <span class="brand-light">LAB</span></span></a><span>Educational POC · No credentials · No network requests</span><a href="#workbench">Back to playground ↑</a></footer>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
